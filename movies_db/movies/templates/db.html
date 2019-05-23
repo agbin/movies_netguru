@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    Title: {{ omdb }}
+
+    <ul>
+        <li>Title: {{ omdb.Title }}</li>
+        <li>Year: {{ omdb.Year }}</li>
+        <li>Rated: {{ omdb.Rated }}</li>
+        <li>Released: {{ omdb.Released }}</li>
+        <li>Runtime: {{ omdb.Runtime }}</li>
+        <li>Genre: {{ omdb.Genre }}</li>
+        <li>Director: {{ omdb.Director }}</li>
+        <li>Writer: {{ omdb.Writer }}</li>
+        <li>Actors: {{ omdb.Actors }}</li>
+        <li>Plot: {{ omdb.Plot }}</li>
+        <li>Language: {{ omdb.Language }}</li>
+        <li>Country: {{ omdb.Country }}</li>
+        <li>Awards: {{ omdb.Awards }}</li>
+        <li>Poster: {{ omdb.Poster }}</li>
+        <!--<li>Ratings: {{ omdb.Ratings }}</li>-->
+        <li>Metascore: {{ omdb.Metascore }}</li>
+        <li>imdbRating: {{ omdb.imdbRating }}</li>
+        <li>imdbVotes: {{ omdb.imdbVotes }}</li>
+        <li>imdbID: {{ omdb.imdbID }}</li>
+        <li>Type: {{ omdb.Type }}</li>
+        <li>DVD: {{ omdb.DVD }}</li>
+        <li>BoxOffice: {{ omdb.BoxOffice }}</li>
+        <li>Production: {{ omdb.Production }}</li>
+        <li>Website: {{ omdb.Website }}</li>
+        <li>Response: {{ omdb.Response }}</li>
+    </ul>
+    <img src="{{ thumbnail_url }}" />
+
+{% endblock %}
