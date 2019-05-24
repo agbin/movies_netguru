@@ -17,3 +17,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('text', 'movie_id',)
 
 
+class MovieTopSerializer(serializers.Serializer):
+    movie_id = serializers.IntegerField()
+    total_comments = serializers.IntegerField()
+    rank = serializers.IntegerField()

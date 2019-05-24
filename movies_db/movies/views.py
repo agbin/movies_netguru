@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.conf import settings
 import requests
 from .forms import SubmitMovie
-from .serializer import MovieSerializer, CommentSerializer
+from .serializer import MovieSerializer, CommentSerializer, MovieTopSerializer
 from rest_framework import generics
 from .models import Movie, Comment
 from .forms import CommentAddForm
@@ -10,6 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.views import View
+from django.db.models import Count
+from django.db.models import F
 
 
 
@@ -18,7 +19,6 @@ class ListMovies(APIView):
     def get(self, request):
 
         form = SubmitMovie()
-
         return render(request, 'index.html', {'form': form})
 
     def post(self, request):
@@ -51,7 +51,6 @@ class AddComment(View):
         return render(request, 'comment.html', {'movie': movie, 'comments': comments, "form": form})
 
     def post(self, request, pk):
-        # movies_recorded = Movie.objects.values('title', 'pk')
         form = CommentAddForm(request.POST)
         movie = Movie.objects.get(pk=pk)
         if form.is_valid():
@@ -60,8 +59,9 @@ class AddComment(View):
                 movie=movie,
                 name=form.cleaned_data['name'],
             )
+            Movie.objects.filter(pk=pk).update(Total_comments=F('Total_comments') + 1)
             return redirect('comment', pk)
-            # return redirect('start')
+
 
 class CommentsView(generics.ListCreateAPIView):
     # List of all recorded movies
@@ -69,4 +69,19 @@ class CommentsView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
 
 
-
+class Top(generics.ListCreateAPIView):
+    top_movies = Movie.objects.all().order_by('-Total_comments')
+    top_list = []
+    rank = 0
+    prev_rank = 0
+    for movie in top_movies:
+        if movie.Total_comments != prev_rank:
+            prev_rank = movie.Total_comments
+            rank += 1
+        top_list.append({
+            'movie_id': movie.pk,
+            'total_comments': movie.Total_comments,
+            'rank': rank
+        })
+    queryset = top_list
+    serializer_class = MovieTopSerializer
