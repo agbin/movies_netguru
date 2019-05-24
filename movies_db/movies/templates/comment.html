@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="{% url 'start' %}" method="get" style="font-size: 18px">
+        <input type="submit" value="Back">
+    </form>
+
+    <h1 align="center">Add Comment</h1><br><br>
+    {{ movie.Title }},
+    id: {{ movie.pk }}
+    <form action="{% url 'comment' movie.id %}" method="post" style="font-size: 18px">
+
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Save Comment">
+    </form>
+
+    {% for comment in comments %}
+       <div class="col-md-8">
+           <div class="comment">
+               <div class="date"><strong>{{ comment.name }}</strong></div>
+               <p style="font-size: 18px">{{comment.text}}</p><br>
+           </div>
+       </div>
+    {% endfor %}
+
+
+{% endblock %}

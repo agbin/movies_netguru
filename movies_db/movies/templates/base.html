@@ -2,6 +2,14 @@
     <body>
         <div>
             {% block content %}{% endblock %}
+            <form action="/movies/list" method="GET">
+            <input type="submit" value="Show all recorded movies">
+            </form>
+            <form action="/comments/list" method="GET">
+            <input type="submit" value="Show all recorded comments">
+            </form>
+
+
         </div>
     </body>
 </html>

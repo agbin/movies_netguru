@@ -2,9 +2,10 @@
 
 {% block content %}
 
-    Title: {{ omdb }}
+
 
     <ul>
+        <li>pk: {{ omdb.pk }}</li>
         <li>Title: {{ omdb.Title }}</li>
         <li>Year: {{ omdb.Year }}</li>
         <li>Rated: {{ omdb.Rated }}</li>
@@ -32,5 +33,13 @@
         <li>Response: {{ omdb.Response }}</li>
     </ul>
     <img src="{{ thumbnail_url }}" />
+
+
+    <form action="{% url 'comment' omdb.pk %}" method="get">
+    {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Add Comment">
+    </form><br>
+
 
 {% endblock %}
